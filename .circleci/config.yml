@@ -1,0 +1,22 @@
+version: 2
+
+default: &default
+  working_directory: ~/ToucanToco/toucan-data-sdk
+  docker:
+    - image: circleci/python:3.6.2
+
+jobs:
+  build:
+    <<: *default
+    parallelism: 1
+    shell: /bin/bash --login
+    steps:
+      - checkout
+      - run:
+          name: Create virtualenv
+          command: |
+            make set-test-env
+      - run:
+          name: Unit tests
+          command: |
+            make circleci-test
